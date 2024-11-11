@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { RestService } from '../rest.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-candidate-details',
@@ -26,7 +26,8 @@ export class CandidateDetailsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private restService: RestService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -101,6 +102,9 @@ export class CandidateDetailsComponent implements OnInit {
         .updateCandidateById(this.candidate.id, updatedCandidate)
         .subscribe((response) => {
           console.log('Candidate updated successfully', response);
+        })
+        .add(() => {
+          this.router.navigate(['candidates']);
         });
     }
   }
