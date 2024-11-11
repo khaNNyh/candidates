@@ -1,0 +1,48 @@
+<div class="container">
+  <h2 *ngIf="candidate">{{ candidate.name }} {{ candidate.surname }}</h2>
+  <!-- candidate-details.component.html -->
+  <form [formGroup]="candidateForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Surname</mat-label>
+      <input matInput formControlName="surname" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="statusId">
+        <mat-option
+          *ngFor="let status of candidateStatuses"
+          [value]="status.id"
+        >
+          {{ status.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div formArrayName="skills">
+      <label>Select skills:</label>
+      <div *ngFor="let skill of allSkills; let i = index">
+        <mat-checkbox [formControlName]="i">{{ skill.name }}</mat-checkbox>
+      </div>
+    </div>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="candidateForm.invalid"
+    >
+      Submit
+    </button>
+  </form>
+</div>
